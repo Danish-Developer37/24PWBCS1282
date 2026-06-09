@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task 9 – CSS Transform Gallery</title>
+
+  <!-- ✅ Correct stylesheet links from /exercises -->
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/typography.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/effects.css">
+
+  <style>
+    /* ========== Minimal base (works even if globals are empty) ========== */
+    :root{
+      --bg: #0f1220; --surface:#171a2b; --surface2:#20243a; --text:#e6e8f2;
+      --muted:#9aa3b2; --primary:#6aa2ff; --accent:#ffcc66;
+      --radius:12px; --shadow:0 12px 34px rgba(0,0,0,.35);
+    }
+    *{ box-sizing: border-box; }
+    body{
+      margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 10% -10%, #243158 0%, #14182a 60%, #0c0f1e 100%);
+      line-height:1.6;
+    }
+    .container{ width:min(100% - 2rem, 1100px); margin-inline:auto; padding-block:2rem; }
+    .card{
+      background: linear-gradient(180deg, var(--surface), var(--surface2));
+      border:1px solid rgba(255,255,255,.12); border-radius:var(--radius);
+      padding:1rem; box-shadow:var(--shadow);
+    }
+    .title{ margin:0 0 .25rem; font-weight:700; letter-spacing:.3px; }
+    .hint{ color:var(--muted); margin:.1rem 0 .8rem; }
+    .grid{ display:grid; gap:1rem; }
+    .cols-2{ grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); }
+    .cols-3{ grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); }
+
+    /* ================= Demo boxes ================= */
+    .demo{
+      display:grid; grid-template-columns: 140px 1fr; gap:1rem; align-items:center;
+    }
+    .box{
+      width:140px; height:140px; border-radius:16px; overflow:hidden;
+      background: conic-gradient(from 210deg, #6aa2ff, #b993ff, #ffcc66, #6aa2ff);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      display:grid; place-items:center; color:#0b1222; font-weight:800;
+      transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s ease, filter .45s ease;
+      will-change: transform;
+    }
+    .box.small{ width:110px; height:110px; }
+    .box label{ display:block; background:rgba(255,255,255,.8); padding:.15rem .35rem; border-radius:6px; }
+
+    .note{ color:var(--muted); font-size:.95rem; }
+    code.code{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); padding:.15rem .35rem; border-radius:6px; }
+
+    /* 1) Rotation, Scaling, Translation --------------------------------- */
+    .rotate .box:hover{ transform: rotate(25deg); }
+    .scale  .box:hover{ transform: scale(1.18); }
+    .translate .box:hover{ transform: translate(14px,-12px); }
+
+    /* 2) 3D transforms --------------------------------------------------- */
+    .scene{ perspective: 900px; }
+    .tilt3d .box:hover{ transform: rotateX(22deg) rotateY(18deg) translateZ(10px); }
+
+    /* Flip card (front/back) */
+    .flip-scene{ perspective: 1000px; width: 180px; height: 180px; }
+    .flip{
+      position: relative; width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform .6s cubic-bezier(.2,.7,.2,1);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+    }
+    .flip:hover{ transform: rotateY(180deg); }
+    .face{
+      position:absolute; inset:0; display:grid; place-items:center;
+      backface-visibility: hidden; font-weight:700;
+    }
+    .face.front{ background: linear-gradient(135deg, #6aa2ff, #b993ff); color:#0c0f1e; }
+    .face.back { background: linear-gradient(135deg, #111827, #0b1222); color:#e6e8f2; transform: rotateY(180deg); }
+
+    /* 3) Transform-origin demos ----------------------------------------- */
+    .origin .box{ background: linear-gradient(135deg, #ffcc66, #ff9f66); }
+    .origin .box:hover{ transform: rotate(35deg); }
+    .origin .tl  .box{ transform-origin: 0% 0%; }           /* top-left  */
+    .origin .ctr .box{ transform-origin: 50% 50%; }         /* center     */
+    .origin .br  .box{ transform-origin: 100% 100%; }       /* bottom-right */
+
+    /* 4) Combined transforms -------------------------------------------- */
+    .combo .box:hover{ transform: translate(12px, -8px) rotate(12deg) scale(1.08) skewX(2deg); }
+
+    /* 5) Transition animations (toggle / hover) ------------------------- */
+    .transition-demos .box{ transition: transform 480ms cubic-bezier(.2,.7,.2,1), box-shadow 480ms ease; }
+    .is-animated .transition-demos .box{ transform: translateY(-16px) rotate(6deg) scale(1.04); box-shadow: 0 22px 60px rgba(0,0,0,.5); }
+
+    /* Staggered tiles using transition-delay */
+    .tiles{ display:grid; grid-template-columns: repeat(6, 44px); gap:8px; align-items:center; }
+    .tile{
+      width:44px; height:44px; border-radius:10px;
+      background: linear-gradient(180deg, #243158, #0f1220); border:1px solid rgba(255,255,255,.12);
+      transition: transform .45s cubic-bezier(.2,.7,.2,1), background-color .45s;
+    }
+    .is-animated .tile{ transform: translateY(-10px) scale(1.06); background: linear-gradient(180deg, #6aa2ff, #3c7cff); }
+    /* stagger delays */
+    .tile:nth-child(1){ transition-delay: 0ms; }
+    .tile:nth-child(2){ transition-delay: 40ms; }
+    .tile:nth-child(3){ transition-delay: 80ms; }
+    .tile:nth-child(4){ transition-delay: 120ms; }
+    .tile:nth-child(5){ transition-delay: 160ms; }
+    .tile:nth-child(6){ transition-delay: 200ms; }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .box, .flip{ transition: none !important; }
+      .tile{ transition: none !important; }
+    }
+
+    /* Small nav */
+    .nav { list-style:none; padding:0; margin:.75rem 0 0; display:flex; gap:.5rem; flex-wrap:wrap; }
+    .nav a{ display:inline-block; padding:.45rem .7rem; color:var(--text); text-decoration:none; border:1px solid rgba(255,255,255,.12); border-radius:8px; }
+    .btn{
+      display:inline-block; margin:.25rem 0; padding:.55rem .9rem; border-radius:10px;
+      background: var(--accent); color:#0c0f1e; border:2px solid transparent; text-decoration:none; font-weight:700;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+  <main class="container" id="root">
+    <header class="card">
+      <h1 class="title">CSS Transform Gallery</h1>
+      <p class="hint">Rotation, scaling, translation, 3D transforms, transform-origin, combined transforms, and transition animations.</p>
+      <ul class="nav">
+        <li><a href="../index.html">← Back to Home</a></li>
+        <li><a href="./selectors.html">Selectors</a></li>
+        <li><a href="./typography.html">Typography</a></li>
+        <li><a href="./backgrounds.html">Backgrounds</a></li>
+        <li><a href="./images.html">Images</a></li>
+      </ul>
+    </header>
+
+    <!-- 1) Rotation, Scaling, Translation -->
+    <section class="card grid cols-2">
+      <h2 class="title" style="grid-column:1/-1;">1) 2D Transforms: Rotation, Scaling, Translation</h2>
+
+      <div class="demo rotate">
+        <div class="box"><label>ROTATE</label></div>
+        <div class="note">Hover box → <code class="code">transform: rotate(25deg)</code></div>
+      </div>
+
+      <div class="demo scale">
+        <div class="box"><label>SCALE</label></div>
+        <div class="note">Hover box → <code class="code">transform: scale(1.18)</code></div>
+      </div>
+
+      <div class="demo translate">
+        <div class="box"><label>MOVE</label></div>
+        <div class="note">Hover box → <code class="code">transform: translate(14px, -12px)</code></div>
+      </div>
+    </section>
+
+    <!-- 2) 3D Transform Effects -->
+    <section class="card grid cols-2">
+      <h2 class="title" style="grid-column:1/-1;">2) 3D Transform Effects</h2>
+
+      <div class="demo tilt3d">
+        <div class="scene">
+          <div class="box"><label>3D TILT</label></div>
+        </div>
+        <div class="note">Parent has <code class="code">perspective: 900px</code>. Hover box → <code class="code">rotateX(22deg) rotateY(18deg) translateZ(10px)</code></div>
+      </div>
+
+      <div class="demo">
+        <div class="flip-scene">
+          <div class="flip" aria-label="flip card">
+            <div class="face front">FRONT</div>
+            <div class="face back">BACK</div>
+          </div>
+        </div>
+        <div class="note">Hover card to flip → <code class="code">transform-style: preserve-3d</code> + <code class="code">rotateY(180deg)</code></div>
+      </div>
+    </section>
+
+    <!-- 3) Transform Origin -->
+    <section class="card origin">
+      <h2 class="title">3) Transform Origin Demonstrations</h2>
+      <p class="hint">Hover any box. Same rotation, different pivot via <code class="code">transform-origin</code>.</p>
+
+      <div class="grid cols-3">
+        <div class="demo tl">
+          <div class="box small"><label>TOP‑LEFT</label></div>
+          <div class="note"><code class="code">transform-origin: 0% 0%</code></div>
+        </div>
+
+        <div class="demo ctr">
+          <div class="box small"><label>CENTER</label></div>
+          <div class="note"><code class="code">transform-origin: 50% 50%</code></div>
+        </div>
+
+        <div class="demo br">
+          <div class="box small"><label>BOT‑RIGHT</label></div>
+          <div class="note"><code class="code">transform-origin: 100% 100%</code></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) Combined Transformations -->
+    <section class="card combo">
+      <h2 class="title">4) Combined Transformations</h2>
+      <div class="demo">
+        <div class="box"><label>COMBO</label></div>
+        <div class="note">Hover box → <code class="code">translate(12px,-8px) rotate(12deg) scale(1.08) skewX(2deg)</code></div>
+      </div>
+    </section>
+
+    <!-- 5) Transition Animations -->
+    <section class="card transition-demos" id="transitions">
+      <h2 class="title">5) Transition Animations</h2>
+      <p class="hint">Use the button to toggle the animation state. Hover also animates. Staggered tiles use <code class="code">transition-delay</code>.</p>
+
+      <button class="btn" id="toggle">Toggle Animate</button>
+
+      <div class="grid cols-2" style="margin-top:.5rem;">
+        <div class="demo">
+          <div class="box"><label>TRANSITION</label></div>
+          <div class="note">On toggle: moves, rotates, scales with custom easing.</div>
+        </div>
+
+        <div class="tiles" aria-label="staggered tiles">
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Toggle ".is-animated" on the root container for transitions demo
+    (function () {
+      const root = document.getElementById('root');
+      const btn  = document.getElementById('toggle');
+      const transitions = document.getElementById('transitions');
+
+      btn.addEventListener('click', () => {
+        transitions.classList.toggle('is-animated');
+      });
+    })();
+  </script>
+</body>
+</html>

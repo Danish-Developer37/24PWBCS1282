@@ -1,0 +1,101 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* ================= FIXED HEADER ================= */
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #222;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    z-index: 1000;
+}
+
+/* ================= LAYOUT ================= */
+
+.container {
+    margin-top: 80px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sidebar {
+    float: left;
+    width: 25%;
+}
+
+.content {
+    float: right;
+    width: 70%;
+}
+
+.clear {
+    clear: both;
+}
+.sticky-item {
+    position: sticky;
+    top: 100px;
+    background: lightblue;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    z-index: 2000;
+}
+
+.modal-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    width: 400px;
+    text-align: center;
+    z-index: 3000;
+}
+@media (max-width: 768px) {
+
+    /* Header becomes static */
+    .header {
+        position: static;
+    }
+
+    .container {
+        margin-top: 0;
+    }
+
+    /* Stack layout */
+    .sidebar,
+    .content {
+        float: none;
+        width: 100%;
+    }
+
+    /* Disable sticky */
+    .sticky-item {
+        position: static;
+    }
+
+    /* Full-screen modal */
+    .modal-box {
+        position: static;
+        transform: none;
+        width: 100%;
+        height: 100vh;
+        box-sizing: border-box;
+    }
+}

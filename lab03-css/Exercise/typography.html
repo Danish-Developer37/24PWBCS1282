@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task 2 – Typography Showcase</title>
+
+  <!-- ✅ Project CSS (relative path from /exercises) -->
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/typography.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/effects.css">
+
+  <!-- ✅ Google Fonts: 3 families (Poppins, Lora, Source Code Pro) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================
+       Minimal base so page looks good even if global CSS is empty
+       ========================================================== */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.65;
+      color: #e6e8f2;
+      background: radial-gradient(1200px 600px at 10% -10%, #243158 0%, #14182a 60%, #0c0f1e 100%);
+    }
+    .container { width: min(100% - 2rem, 1100px); margin-inline: auto; padding-block: 2rem; }
+    .panel { background: #171a2b; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 1rem; }
+    .grid { display: grid; gap: 1rem; }
+    .grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+    /* ==========================================================
+       1) Google Fonts usage (3 different implementations)
+       ----------------------------------------------------------
+       - Poppins: default body + UI (sans)
+       - Lora: headings / longform (serif)
+       - Source Code Pro: code samples (monospace)
+       ========================================================== */
+    .font-poppins  { font-family: Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+    .font-lora     { font-family: Lora, Georgia, "Times New Roman", serif; }
+    .font-code     { font-family: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    /* ==========================================================
+       2) Font sizes using different units
+       ----------------------------------------------------------
+       px, rem, em, vw, clamp()
+       ========================================================== */
+    .size-px   { font-size: 18px; }
+    .size-rem  { font-size: 1.25rem; }     /* equals ~20px if root is 16px */
+    .size-em   { font-size: 1.2em; }       /* relative to parent */
+    .size-vw   { font-size: 3vw; }         /* scales with viewport width */
+    .size-clamp{ font-size: clamp(1rem, 2.5vw + .5rem, 2rem); }
+
+    /* Parent to demonstrate em scaling */
+    .em-parent { font-size: 20px; border-left: 3px solid rgba(255,255,255,.15); padding-left: .75rem; }
+
+    /* ==========================================================
+       3) Text alignment examples
+       ========================================================== */
+    .align-left    { text-align: left; }
+    .align-center  { text-align: center; }
+    .align-right   { text-align: right; }
+    .align-justify { text-align: justify; text-justify: inter-word; }
+
+    /* ==========================================================
+       4) Decorations & Transformations
+       ========================================================== */
+    .u    { text-decoration: underline; }
+    .o    { text-decoration: overline; }
+    .s    { text-decoration: line-through; }
+    .u-wavy { text-decoration: underline wavy #6aa2ff 2px; }
+    .caps   { text-transform: uppercase; letter-spacing: .08em; }
+    .lower  { text-transform: lowercase; }
+    .capit  { text-transform: capitalize; }
+    .wide   { letter-spacing: .06em; }
+    .tight  { letter-spacing: -.01em; }
+
+    /* ==========================================================
+       5) Text Shadow Effects
+       ========================================================== */
+    .shadow-soft   { text-shadow: 0 1px 2px rgba(0,0,0,.35); }
+    .shadow-strong { text-shadow: 0 3px 10px rgba(0,0,0,.6); }
+    .shadow-outline{
+      /* light above + dark below creates a fake outline/emboss */
+      text-shadow:
+        0 -1px 0 rgba(255,255,255,.25),
+        0  2px 6px rgba(0,0,0,.45);
+    }
+    .shadow-neon{
+      color: #c9f2ff;
+      text-shadow:
+        0 0 6px rgba(106,162,255,.7),
+        0 0 14px rgba(106,162,255,.6),
+        0 0 28px rgba(106,162,255,.45);
+    }
+
+    /* Helpers */
+    .section-title { margin: 0 0 .5rem; font-weight: 700; letter-spacing: .3px; }
+    .lead { color: #9aa3b2; margin-top: .25rem; }
+    .card {
+      background: linear-gradient(180deg, #171a2b, #20243a);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .demo-block { padding: .6rem .8rem; border-radius: 8px; background: rgba(255,255,255,.04); }
+    .code { font-family: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); padding: .2rem .35rem; border-radius: 6px; }
+    .nav { list-style: none; padding: 0; margin: .75rem 0 0; display: flex; gap: .5rem; flex-wrap: wrap; }
+    .nav a{
+      display:inline-block; padding:.45rem .7rem; color:#e6e8f2; text-decoration:none;
+      border:1px solid rgba(255,255,255,.12); border-radius:8px;
+    }
+    .nav a:hover{ background:#243158; border-color: rgba(255,255,255,.25); }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <!-- Header -->
+    <header class="panel">
+      <h1 class="section-title font-poppins">Typography Showcase</h1>
+      <p class="lead">Google Fonts (3), different units, alignment, decoration/transform, and text shadows—all in one page.</p>
+      <ul class="nav">
+        <li><a href="../index.html">← Back to Home</a></li>
+        <li><a href="./selectors.html">Selectors</a></li>
+        <li><a href="./backgrounds.html">Backgrounds</a></li>
+        <li><a href="./images.html" target="_blank" rel="noopener">Images (new tab)</a></li>
+      </ul>
+    </header>
+
+    <!-- Google Fonts Usage -->
+    <section class="grid cols-2">
+      <article class="card">
+        <h2 class="section-title font-lora">1) Google Fonts — Lora (serif)</h2>
+        <p class="font-lora">
+          Lora is great for long‑form reading with elegant curves. This paragraph uses
+          <span class="code">font-family: Lora, serif;</span>.
+        </p>
+        <p class="font-lora demo-block">
+          “Good typography is invisible; bad typography is everywhere.”
+        </p>
+      </article>
+
+      <article class="card">
+        <h2 class="section-title font-poppins">1) Google Fonts — Poppins (sans)</h2>
+        <p class="font-poppins">
+          Poppins is a geometric sans ideal for UI and headings. This page's base font is Poppins.
+        </p>
+        <pre class="demo-block font-code" aria-label="code sample">
+<span class="code">body { font-family: Poppins, system-ui, sans-serif; }</span>
+        </pre>
+      </article>
+
+      <article class="card">
+        <h2 class="section-title font-code">1) Google Fonts — Source Code Pro (mono)</h2>
+        <p class="font-code">
+          Monospace fonts shine for code. Aligns characters to a fixed grid for readability.
+        </p>
+        <pre class="demo-block font-code">
+// Example function
+function clamp(min, v, max){ return Math.min(Math.max(v, min), max); }
+        </pre>
+      </article>
+
+      <!-- Font sizes -->
+      <article class="card">
+        <h2 class="section-title">2) Font sizes (different units)</h2>
+        <p class="size-px">18px – fixed absolute size using <span class="code">px</span>.</p>
+        <p class="size-rem">1.25rem – relative to root using <span class="code">rem</span>.</p>
+        <div class="em-parent">
+          <p class="size-em">1.2em – relative to parent (parent set to 20px).</p>
+        </div>
+        <p class="size-vw">3vw – scales with viewport width using <span class="code">vw</span>.</p>
+        <p class="size-clamp">clamp(1rem, 2.5vw + .5rem, 2rem) – fluid between min and max.</p>
+      </article>
+
+      <!-- Alignment -->
+      <article class="card">
+        <h2 class="section-title">3) Text alignment</h2>
+        <p class="align-left demo-block">Left aligned text (default in LTR languages).</p>
+        <p class="align-center demo-block">Center aligned for titles or labels.</p>
+        <p class="align-right demo-block">Right aligned for totals or metadata.</p>
+        <p class="align-justify demo-block" style="max-width: 60ch; margin-inline: auto;">
+          Justified text spreads words so both edges line up, which can look neat in columns.
+          Remember to adjust hyphenation for best results.
+        </p>
+      </article>
+
+      <!-- Decoration & Transformation -->
+      <article class="card">
+        <h2 class="section-title">4) Decoration & Transformation</h2>
+        <p class="u">Underline example (<span class="code">text-decoration: underline</span>).</p>
+        <p class="o">Overline example (<span class="code">text-decoration: overline</span>).</p>
+        <p class="s">Strikethrough example (<span class="code">line-through</span>).</p>
+        <p class="u-wavy">Wavy underline accent for links or warnings.</p>
+        <p class="caps wide">uppercase + letter-spacing for labels.</p>
+        <p class="lower tight">THIS LINE IS LOWERCASED PROGRAMMATICALLY.</p>
+        <p class="capit">each word is capitalized using <span class="code">text-transform: capitalize</span>.</p>
+      </article>
+
+      <!-- Text shadows -->
+      <article class="card">
+        <h2 class="section-title">5) Text shadow effects</h2>
+        <p class="shadow-soft" style="font-size: 1.75rem;">Soft shadow – subtle depth</p>
+        <p class="shadow-strong" style="font-size: 1.75rem;">Strong shadow – headline pop</p>
+        <p class="shadow-outline" style="font-size: 1.75rem;">Outline/emboss feel</p>
+        <p class="shadow-neon" style="font-size: 1.75rem;">Neon glow</p>
+      </article>
+    </section>
+
+    <p style="margin-top: 1rem;"><a href="../index.html">← Back</a></p>
+  </main>
+</body>
+</html>

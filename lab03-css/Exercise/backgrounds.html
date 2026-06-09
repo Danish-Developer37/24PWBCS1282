@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task 3 – Background Gallery</title>
+
+  <!-- Project CSS (relative path from /exercises) -->
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/typography.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/effects.css">
+
+  <style>
+    /* ========= Minimal base so this page looks good alone ========= */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.6;
+      color: #e6e8f2;
+      background: radial-gradient(1200px 600px at 10% -10%, #243158 0%, #14182a 60%, #0c0f1e 100%);
+    }
+    .container { width: min(100% - 2rem, 1100px); margin-inline: auto; padding-block: 2rem; }
+    .grid { display: grid; gap: 1rem; }
+    .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card {
+      background: linear-gradient(180deg, #171a2b, #20243a);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .title { margin: 0 0 .25rem; font-size: 1.1rem; font-weight: 700; }
+    .hint  { color: #9aa3b2; font-size: .95rem; margin: 0 0 .5rem; }
+
+    /* ========= Demo swatches ========= */
+    .swatch {
+      height: 160px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      overflow: hidden;
+    }
+    .tall   { height: 200px; }
+    .label {
+      position: absolute;
+      inset: 10px auto auto 10px;
+      background: rgba(0,0,0,.35);
+      padding: .25rem .5rem; border-radius: 6px; font-size: .85rem;
+    }
+    .wrap { position: relative; }
+
+    /* =============== 1) Solid color backgrounds =============== */
+    .bg-solid-1 { background: #1e293b; }   /* slate-800 */
+    .bg-solid-2 { background: #0ea5e9; }   /* sky-500 */
+    .bg-solid-3 { background: #f59e0b; }   /* amber-500 */
+    .bg-solid-4 { background: #16a34a; }   /* green-600 */
+    .bg-solid-5 { background: #ef4444; }   /* red-500 */
+
+    /* ========== 2) Image backgrounds + repeat patterns ==========
+       NOTE: Update image paths to match your actual files:
+       ../images/backgrounds/pattern.png
+       ../images/backgrounds/tiles.png
+       ../images/backgrounds/hero.jpg
+    */
+    .bg-img-repeat {
+      background: url("C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg");
+      background-repeat: repeat;           /* default tiling */
+      background-size: auto;
+    }
+    .bg-img-repeat-x {
+      background: url("C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg");
+      background-repeat: repeat-x;         /* repeat horizontally */
+      background-size: 160px auto;
+      background-position: center;
+    }
+    .bg-img-repeat-y {
+      background: url("C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg");
+      background-repeat: repeat-y;         /* repeat vertically */
+      background-size: auto 120px;
+      background-position: center;
+    }
+    .bg-img-no-repeat {
+      background: url("C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg") center / contain no-repeat, #0b1222;
+    }
+
+    /* ============== 3) Gradients (linear & radial) ============== */
+    .bg-linear-1 {
+      background: linear-gradient(135deg, #6aa2ff 0%, #b993ff 50%, #ffcc66 100%);
+    }
+    .bg-linear-2 {
+      background: linear-gradient(90deg, #111827 0%, #0b1222 50%, #1f2937 100%);
+    }
+    .bg-radial-1 {
+      background: radial-gradient(600px 300px at 20% 10%, rgba(255,255,255,.15), rgba(255,255,255,0) 60%), #171a2b;
+    }
+    .bg-radial-2 {
+      background: radial-gradient(circle at 70% 40%, #ff8a00, transparent 40%),
+                  radial-gradient(circle at 30% 70%, #6aa2ff, transparent 45%),
+                  #0f1220;
+    }
+
+    /* ========= 4) Multiple background layers (images + shapes) =========
+       Order: first layer is drawn on top.
+    */
+    .bg-multi-1 {
+      background:
+        url("C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg") repeat,
+        radial-gradient(800px 400px at 10% -10%, rgba(255,255,255,.07), rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, #141826, #0d1020);
+      background-size: auto, auto, cover;
+    }
+    .bg-multi-2 {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(0,0,0,.35)),
+        url("C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg") center / cover no-repeat,
+        #0b1222;
+    }
+
+    /* ============== 5) Background blend modes ===================
+       blend mode applies between background layers (and color).
+    */
+    .bg-blend-overlay {
+      background:
+        url("C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg") center/cover no-repeat,
+        linear-gradient(135deg, #1e3a8a, #a21caf);
+      background-blend-mode: overlay; /* overlay image with gradient */
+    }
+    .bg-blend-multiply {
+      background:
+        url("C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg") center/cover no-repeat,
+        #3b82f6;                      /* blue color layer */
+      background-blend-mode: multiply; /* darkens image with color */
+    }
+    .bg-blend-screen {
+      background:
+        url("C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg") center/cover no-repeat,
+        #f59e0b;                      /* amber color layer */
+      background-blend-mode: screen;   /* brightens image with color */
+    }
+
+    /* Accessibility helper for text on images */
+    .overlay-text {
+      position: absolute; inset: auto 10px 10px 10px;
+      background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.55));
+      color: #fff; padding: .5rem .6rem; border-radius: 8px; font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="card">
+      <h1 class="title">Background Gallery</h1>
+      <p class="hint">Solid colors, image repeats, gradients, multiple layers, and blend modes. Agar image nazar na aaye to <code>../images/backgrounds/</code> me filenames verify karen.</p>
+      <p class="hint"><a class="code" href="../index.html">← Back to Home</a></p>
+    </header>
+
+    <!-- 1) Solid colors -->
+    <section class="card">
+      <h2 class="title">1) Solid color backgrounds</h2>
+      <div class="grid cols-3">
+        <div class="swatch bg-solid-1"></div>
+        <div class="swatch bg-solid-2"></div>
+        <div class="swatch bg-solid-3"></div>
+        <div class="swatch bg-solid-4"></div>
+        <div class="swatch bg-solid-5"></div>
+      </div>
+    </section>
+
+    <!-- 2) Image backgrounds + repeat -->
+    <section class="card">
+      <h2 class="title">2) Image backgrounds with repeat patterns</h2>
+      <p class="hint">Patterns ke liye PNG/SVG chalte hain—repeat, repeat-x, repeat-y, no-repeat dikhaya gaya hai.</p>
+      <div class="grid cols-3">
+        <div class="wrap">
+          <div class="swatch bg-img-repeat"></div>
+          <span class="label">repeat</span>
+        </div>
+        <div class="wrap">
+          <div class="swatch bg-img-repeat-x"></div>
+          <span class="label">repeat-x</span>
+        </div>
+        <div class="wrap">
+          <div class="swatch bg-img-repeat-y"></div>
+          <span class="label">repeat-y</span>
+        </div>
+        <div class="wrap">
+          <div class="swatch bg-img-no-repeat"></div>
+          <span class="label">no-repeat (contain)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) Gradients -->
+    <section class="card">
+      <h2 class="title">3) Linear & radial gradients</h2>
+      <div class="grid cols-3">
+        <div class="wrap">
+          <div class="swatch bg-linear-1"></div>
+          <span class="label">linear 135°</span>
+        </div>
+        <div class="wrap">
+          <div class="swatch bg-linear-2"></div>
+          <span class="label">linear 90°</span>
+        </div>
+        <div class="wrap">
+          <div class="swatch bg-radial-1"></div>
+          <span class="label">radial spotlight</span>
+        </div>
+        <div class="wrap">
+          <div class="swatch bg-radial-2"></div>
+          <span class="label">radial orbs</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) Multiple layers -->
+    <section class="card">
+      <h2 class="title">4) Multiple background layers</h2>
+      <div class="grid cols-3">
+        <div class="wrap">
+          <div class="swatch tall bg-multi-1"></div>
+          <span class="label">pattern + radial + base</span>
+        </div>
+        <div class="wrap">
+          <div class="swatch tall bg-multi-2"></div>
+          <span class="label">image + gradient + color</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5) Blend modes -->
+    <section class="card">
+      <h2 class="title">5) Background blend modes</h2>
+      <p class="hint">overlay / multiply / screen show karta hai ke gradient ya color layer image par kaise blend hoti hai.</p>
+      <div class="grid cols-3">
+        <div class="wrap">
+          <div class="swatch tall bg-blend-overlay"></div>
+          <span class="label">overlay</span>
+          <div class="overlay-text">Overlay bright contrast</div>
+        </div>
+        <div class="wrap">
+          <div class="swatch tall bg-blend-multiply"></div>
+          <span class="label">multiply</span>
+          <div class="overlay-text">Multiply adds color tint</div>
+        </div>
+        <div class="wrap">
+          <div class="swatch tall bg-blend-screen"></div>
+          <span class="label">screen</span>
+          <div class="overlay-text">Screen brightens</div>
+        </div>
+      </div>
+    </section>
+
+    <p class="hint" style="margin-top: .75rem;">
+      ⚠️ If images don’t load, check these files exist:
+      <code>../images/backgrounds/pattern.png</code>,
+      <code>../images/backgrounds/tiles.png</code>,
+      <code>../images/backgrounds/hero.jpg</code>,
+      <code>../images/icons/pattern.svg</code>.
+      Aap apni image names rakh kar paths update kar sakte hain.
+    </p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task 4 – Image Styling Portfolio</title>
+
+  <!-- ✅ Correct stylesheet links from /exercises path -->
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/typography.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/effects.css">
+
+  <style>
+    /* ===== Minimal base so page looks good standalone ===== */
+    * { box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height:1.6; color:#e6e8f2;
+      background: radial-gradient(1200px 600px at 10% -10%, #243158 0%, #14182a 60%, #0c0f1e 100%);
+    }
+    .container{ width:min(100% - 2rem, 1100px); margin-inline:auto; padding-block:2rem; }
+    .grid{ display:grid; gap:1rem; }
+    .grid.cols-3{ grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+    /* ===== Gallery Cards ===== */
+    .card{
+      background: linear-gradient(180deg, #171a2b, #20243a);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px; padding:1rem;
+    }
+    .title{ margin:0 0 .25rem; font-weight:700; }
+    .hint{ color:#9aa3b2; margin:0 0 .75rem; }
+
+    figure{ margin:0; }
+    .img-wrap{
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden; /* for rounded corners + overlays */
+      border:1px solid rgba(255,255,255,.12);
+      background: #0b1222;
+      aspect-ratio: 4 / 3;     /* keeps cards uniform */
+    }
+    .img-wrap img{
+      width:100%; height:100%;
+      object-fit: cover;       /* crop center nicely */
+      display:block;
+      transition: transform .35s ease, filter .35s ease, box-shadow .35s ease;
+    }
+    figcaption{
+      color:#9aa3b2; font-size:.95rem;
+      margin-top:.5rem;
+    }
+
+    /* ===== 1) Rounded corners & circular images ===== */
+    .rounded-sm{ border-radius: 8px; }
+    .rounded-lg{ border-radius: 16px; }
+    .circle{
+      width: 180px; height: 180px; border-radius: 50%;
+      margin-inline: auto; overflow: hidden; border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+    }
+    .circle img{ object-fit: cover; }
+
+    /* ===== 2) Borders & shadows ===== */
+    .img-border{ border:2px solid rgba(255,255,255,.25); }
+    .shadow-soft{ box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+    .shadow-strong{ box-shadow: 0 18px 50px rgba(0,0,0,.55); }
+
+    /* ===== 3) Hover effects & transitions ===== */
+    .hover-zoom img:hover{ transform: scale(1.06); }
+    .hover-raise img:hover{ transform: translateY(-4px); box-shadow: 0 16px 50px rgba(0,0,0,.45); }
+    .hover-tilt img:hover{ transform: scale(1.03) rotate(.8deg); }
+
+    /* ===== 4) CSS filters ===== */
+    .f-grayscale img{ filter: grayscale(100%); }
+    .f-grayscale img:hover{ filter: grayscale(0%); }
+
+    .f-sepia img{ filter: sepia(70%) contrast(1.05) saturate(1.2); }
+    .f-sepia img:hover{ filter: sepia(0%) contrast(1) saturate(1); }
+
+    .f-blur img{ filter: blur(2px) brightness(.9); }
+    .f-blur img:hover{ filter: blur(0) brightness(1); }
+
+    /* ===== 5) Image overlays with text ===== */
+    .overlay::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.65) 100%);
+      transition: opacity .35s ease;
+      opacity:.85;
+      pointer-events:none;
+    }
+    .overlay:hover::after{ opacity:1; }
+    .overlay-text{
+      position:absolute; left:12px; right:12px; bottom:10px;
+      color:#fff; font-weight:700;
+      text-shadow: 0 2px 10px rgba(0,0,0,.6);
+      z-index:1;
+    }
+    .badge{
+      position:absolute; top:10px; left:10px;
+      background: rgba(0,0,0,.45); color:#fff; padding:.25rem .5rem;
+      font-size:.85rem; border-radius: 6px; border:1px solid rgba(255,255,255,.18);
+      z-index:1;
+    }
+
+    /* ===== Polaroid style bonus ===== */
+    .polaroid{
+      background: #fff; color:#111; padding:.5rem .5rem 1rem;
+      border-radius: 8px; border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 22px 60px rgba(0,0,0,.35);
+      transform: rotate(-1deg);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .polaroid:hover{ transform: rotate(0deg) translateY(-4px); box-shadow: 0 28px 70px rgba(0,0,0,.45); }
+    .polaroid .img-wrap{ border:none; border-radius:6px; aspect-ratio: 4/3; }
+    .polaroid figcaption{ color:#333; }
+
+    /* Small utility */
+    .center { text-align:center; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="card">
+      <h1 class="title">Image Styling Portfolio</h1>
+      <p class="hint">Rounded & circular images, borders & shadows, hover transitions, CSS filters, aur text overlays.</p>
+      <p class="hint"><a href="../index.html" style="color:#6aa2ff;">← Back to Home</a></p>
+    </header>
+
+    <section class="grid cols-3">
+      <!-- 1) Rounded corners -->
+      <article class="card">
+        <h2 class="title">Rounded Corners</h2>
+        <figure>
+          <div class="img-wrap rounded-lg hover-zoom shadow-soft">
+            <img src="C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg" alt="Landscape – rounded corners demo">
+          </div>
+          <figcaption>Border radius: <code>16px</code> + subtle zoom on hover.</figcaption>
+        </figure>
+      </article>
+
+      <!-- 1) Circular image (avatar style) -->
+      <article class="card center">
+        <h2 class="title">Circular Image</h2>
+        <figure>
+          <div class="circle">
+            <img src="C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg" alt="Portrait crop in circle">
+          </div>
+          <figcaption>Perfect circle using <code>border-radius: 50%</code> and <code>object-fit: cover</code>.</figcaption>
+        </figure>
+      </article>
+
+      <!-- 2) Borders & strong shadow -->
+      <article class="card">
+        <h2 class="title">Borders & Shadows</h2>
+        <figure>
+          <div class="img-wrap img-border shadow-strong hover-raise">
+            <img src="C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg" alt="Architecture with border and strong shadow">
+          </div>
+          <figcaption>2px semi‑transparent border + heavy drop shadow; raises on hover.</figcaption>
+        </figure>
+      </article>
+
+      <!-- 3) Hover effects: tilt -->
+      <article class="card">
+        <h2 class="title">Hover Effects (Tilt)</h2>
+        <figure>
+          <div class="img-wrap hover-tilt shadow-soft">
+            <img src="C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg" alt="Creative shot for tilt effect">
+          </div>
+          <figcaption>On hover: mild rotation + scale for playful effect.</figcaption>
+        </figure>
+      </article>
+
+      <!-- 4) CSS Filters: grayscale -->
+      <article class="card">
+        <h2 class="title">CSS Filters (Grayscale)</h2>
+        <figure>
+          <div class="img-wrap f-grayscale hover-zoom">
+            <span class="badge">grayscale → color</span>
+            <img src="C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg" alt="Street scene with grayscale filter">
+          </div>
+          <figcaption>Hover to transition from grayscale to full color.</figcaption>
+        </figure>
+      </article>
+
+      <!-- 4) CSS Filters: sepia -->
+      <article class="card">
+        <h2 class="title">CSS Filters (Sepia)</h2>
+        <figure>
+          <div class="img-wrap f-sepia hover-zoom">
+            <span class="badge">sepia</span>
+            <img src="C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg" alt="Vintage look with sepia filter">
+          </div>
+          <figcaption>Warm vintage tone using <code>sepia</code> + <code>saturate</code>.</figcaption>
+        </figure>
+      </article>
+
+      <!-- 4) CSS Filters: blur -->
+      <article class="card">
+        <h2 class="title">CSS Filters (Blur)</h2>
+        <figure>
+          <div class="img-wrap f-blur">
+            <span class="badge">blur on → off</span>
+            <img src="C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg" alt="Blurred then sharp on hover">
+          </div>
+          <figcaption>Hover to sharpen a blurred image for reveal effects.</figcaption>
+        </figure>
+      </article>
+
+      <!-- 5) Overlay with text -->
+      <article class="card">
+        <h2 class="title">Overlay + Text</h2>
+        <figure class="overlay-card">
+          <div class="img-wrap overlay hover-zoom">
+            <span class="overlay-text">Sunset Overlook</span>
+            <img src="C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg" alt="Sunset with text overlay">
+          </div>
+          <figcaption>Gradient overlay via <code>::after</code> + anchored caption.</figcaption>
+        </figure>
+      </article>
+
+      <!-- Bonus: Polaroid style card -->
+      <article class="polaroid">
+        <figure>
+          <div class="img-wrap">
+            <img src="C:\Users\ok\Desktop\AdobeStock_318392932_Preview.jpeg" alt="Polaroid style presentation">
+          </div>
+          <figcaption><strong>Polaroid</strong> — white frame with shadow; tilts on hover.</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <p class="hint" style="margin-top: .75rem;">
+      ⚠️ Agar images load nahi ho rahi: ensure yeh files exist karti hon e.g.
+      <code>../images/gallery/pic-1.jpg .. pic-9.jpg</code>.
+      Aap apne file names use kar sakte hain—sirf <code>src</code> paths update kar dein.
+    </p>
+  </main>
+</body>
+</html>

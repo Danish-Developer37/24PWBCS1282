@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E‑commerce Product Grid</title>
+    task8.css
+</head>
+<body>
+
+<header class="header">
+    <h1>My Shop</h1>
+    <button class="filter-btn" onclick="toggleFilter()">☰ Filters</button>
+</header>
+
+<div class="layout">
+
+    <!-- Filter Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <h3>Filters</h3>
+        <p><input type="checkbox"> Electronics</p>
+        <p><input type="checkbox"> Clothing</p>
+        <p><input type="checkbox"> Accessories</p>
+    </aside>
+
+    <!-- Product Grid -->
+    <main class="products">
+
+        <div class="product">
+            https://via.placeholder.com/200
+            <h4>Product 1</h4>
+            <p>$25</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="product">
+            https://via.placeholder.com/200
+            <h4>Product 2</h4>
+            <p>$40</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="product">
+            https://via.placeholder.com/200
+            <h4>Product 3</h4>
+            <p>$30</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="product">
+            https://via.placeholder.com/200
+            <h4>Product 4</h4>
+            <p>$55</p>
+            <button>Add to Cart</button>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+function toggleFilter() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

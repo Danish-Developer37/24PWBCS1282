@@ -1,0 +1,123 @@
+/* ---------- GLOBAL RESET ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- COLOR THEME ---------- */
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1f2530;
+  --text: #e6edf3;
+  --muted: #8b949e;
+
+  --primary: #58a6ff;
+  --primary-dark: #1f6feb;
+  --accent: #ffcc66;
+  --danger: #ff6b6b;
+
+  --radius: 12px;
+  --shadow: 0 12px 35px rgba(0,0,0,.35);
+}
+
+/* ---------- BODY & TYPOGRAPHY ---------- */
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  padding-bottom: 4rem;
+}
+
+/* ---------- LAYOUT CONTAINER ---------- */
+.container {
+  width: min(1100px, 90%);
+  margin: auto;
+  padding-top: 2rem;
+}
+
+/* ---------- HEADERS ---------- */
+h1, h2, h3 {
+  line-height: 1.2;
+  margin-bottom: .6rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar {
+  background: rgba(22, 27, 34, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #30363d;
+  padding: .75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navbar a {
+  margin-right: 1rem;
+  color: var(--text);
+  text-decoration: none;
+  padding: .4rem .7rem;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.navbar a:hover {
+  background: var(--surface2);
+}
+
+/* ---------- CARDS ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid #30363d;
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn {
+  background: var(--primary);
+  color: #0d1117;
+  padding: .55rem 1rem;
+  border-radius: var(--radius);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+}
+
+/* ---------- IMAGES ---------- */
+img {
+  border-radius: var(--radius);
+  max-width: 100%;
+  display: block;
+}
+
+/* Hover glow */
+img:hover {
+  transform: scale(1.02);
+  transition: 0.3s ease;
+  box-shadow: 0 12px 40px rgba(56, 139, 253, 0.35);
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  text-align: center;
+  padding: 2rem;
+  margin-top: 3rem;
+  border-top: 1px solid #30363d;
+  color: var(--muted);
+}

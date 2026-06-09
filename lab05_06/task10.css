@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+.header {
+    background: #222;
+    color: white;
+    padding: 15px;
+}
+
+/* Navigation */
+.nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Layout */
+.layout {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background: #eee;
+    padding: 20px;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Breakpoint Indicator */
+.indicator {
+    background: #444;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.indicator span {
+    display: none;
+}
+/* Desktop */
+@media (min-width: 901px) {
+
+    body {
+        font-size: 18px;
+    }
+
+    .desktop {
+        display: inline;
+    }
+}
+/* Tablet */
+@media (max-width: 900px) and (min-width: 601px) {
+
+    body {
+        font-size: 16px;
+    }
+
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .tablet {
+        display: inline;
+    }
+}/* Mobile */
+@media (max-width: 600px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    /* Navigation becomes vertical */
+    .nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Layout stacks fully */
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .mobile {
+        display: inline;
+    }
+}
+

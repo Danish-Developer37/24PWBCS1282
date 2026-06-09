@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task 8 – Navigation Menu Styling</title>
+
+<!-- Project CSS -->
+<link rel="stylesheet" href="../styles/main.css">
+<link rel="stylesheet" href="../styles/components.css">
+<link rel="stylesheet" href="../styles/effects.css">
+
+<style>
+/* ==========================================================
+   BASE
+========================================================== */
+body {
+  background: radial-gradient(1200px 600px at 10% -10%, #243158, #14182a 60%, #0c0f1e);
+  color: #e6e8f2;
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+.container { width: min(100% - 2rem, 1100px); margin-inline: auto; padding-block: 2rem; }
+
+/* Card box layout */
+.card {
+  background: linear-gradient(180deg, #171a2b, #20243a);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+.title { font-size: 1.4rem; font-weight: 700; margin-bottom: .5rem; }
+
+/* ==========================================================
+   1) HORIZONTAL NAVIGATION
+========================================================== */
+.nav-horizontal {
+  display: flex;
+  gap: .75rem;
+  background: #111827;
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.nav-horizontal a {
+  color: #e6e8f2;
+  padding: .55rem .9rem;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background .25s ease, transform .2s ease;
+}
+
+.nav-horizontal a:hover {
+  background: #243158;
+  transform: translateY(-2px);
+}
+
+.nav-horizontal a.active {
+  background: #3c7cff;
+  color: #0c0f1e;
+  font-weight: 700;
+}
+
+/* ==========================================================
+   2) VERTICAL NAVIGATION
+========================================================== */
+.nav-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  background: #111827;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.12);
+  width: 220px;
+}
+
+.nav-vertical a {
+  color: #e6e8f2;
+  padding: .65rem .8rem;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background .25s ease, padding-left .25s ease;
+}
+
+.nav-vertical a:hover {
+  background: #1f2a44;
+  padding-left: 1rem;
+}
+
+.nav-vertical a.active {
+  background: #3c7cff;
+  color: #0c0f1e;
+  font-weight: 600;
+}
+
+/* ==========================================================
+   3) DROPDOWN MENU
+========================================================== */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  background: #1f2937;
+  padding: .7rem 1rem;
+  color: #e6e8f2;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.15);
+  cursor: pointer;
+  transition: background .25s ease;
+}
+
+.dropdown-btn:hover {
+  background: #243158;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: #141a2b;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.18);
+  display: none;
+  min-width: 180px;
+  padding: .4rem 0;
+  z-index: 50;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: .6rem 1rem;
+  color: #e6e8f2;
+  text-decoration: none;
+  transition: background .2s ease, padding-left .2s ease;
+}
+
+.dropdown-menu a:hover {
+  background: #243158;
+  padding-left: 1.3rem;
+}
+
+/* Show menu on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* ==========================================================
+   4) RESPONSIVE NAV (Hamburger menu)
+========================================================== */
+.mobile-nav {
+  display: none;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  font-size: 1.8rem;
+  padding: .4rem .6rem;
+  background: #1f2937;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.15);
+}
+
+@media (max-width: 700px) {
+  .nav-horizontal {
+    display: none;
+  }
+
+  .hamburger {
+    display: inline-block;
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    gap: .5rem;
+    background: #111827;
+    padding: 1rem;
+    margin-top: .7rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.12);
+  }
+
+  .mobile-nav a {
+    padding: .65rem .8rem;
+    text-decoration: none;
+    color: #e6e8f2;
+    border-radius: 6px;
+    transition: background .2s ease;
+  }
+
+  .mobile-nav a:hover {
+    background: #243158;
+  }
+}
+
+/* JS toggle (CSS-only fallback uses :target method, but JS works better) */
+</style>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+}
+</script>
+</head>
+
+<body>
+  <main class="container">
+    <header class="card">
+      <h1 class="title">Task 8 – Navigation Menu Styling</h1>
+      <p class="hint">Horizontal + vertical menus, dropdown, responsive hamburger, hover/active states, transitions.</p>
+      <p><a href="../index.html" style="color:#6aa2ff;">← Back to Home</a></p>
+    </header>
+
+    <!-- Horizontal Menu -->
+    <section class="card">
+      <h2 class="title">1) Horizontal Navigation</h2>
+
+      <div class="nav-horizontal">
+        <a href="#" class="active">Home</a>
+        <a href   <h2 class="title">2) Vertical Navigation</h2>
+
+      <nav class="nav-vertical">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">Reports</a>
+        <a href="#">Settings</a>
+        <a href="#">Billing</a>
+        <a href="#">Logout</a>
+      </nav>
+    </section>
+
+    <!-- Dropdown Menu -->
+    <section class="card">
+      <h2 class="title">3) Dropdown Menu</h2>
+
+      <div class="dropdown">
+        <button class="dropdown-btn">Menu ▾</button>
+        <div class="dropdown-menu">
+          <a href="#">Profile</a>
+          <a href="#">Notifications</a>
+          <a href="#">Billing</a>
+          <a href="#">Logout</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Responsive Menu -->
+    <section class="card">
+      <h2 class="title">4) Responsive Navigation</h2>
+
+      <button class="hamburger" onclick="toggleMenu()">☰ Menu</button>
+
+      <nav id="mobileNav" class="mobile-nav">
+        <a href="#" class="active">Home</a>
+        <a href="#">Products</a>
+        <a href="#">Pricing</a>
+        <a href="#">Support</a>
+      </nav>
+    </section>
+
+  </main>
+</body>
+</html>

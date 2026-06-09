@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Positioning Challenge</title>
+    <link rel="stylesheet" href="task3.css">
+</head>
+<body>
+
+    <!-- Fixed Header -->
+    <header class="header">
+        <h1>Positioning Challenge</h1>
+    </header>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sticky-item">Sticky Item 1</div>
+            <div class="sticky-item">Sticky Item 2</div>
+            <div class="sticky-item">Sticky Item 3</div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <h2>Main Content</h2>
+            <p>
+                This layout demonstrates fixed, absolute, and sticky positioning
+                with responsive behavior and z-index layering.
+            </p>
+            <button onclick="openModal()">Open Modal</button>
+        </main>
+
+        <div class="clear"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-box">
+            <h3>Modal Dialog</h3>
+            <p>Absolutely positioned modal window.</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+<script>
+function openModal() {
+    document.getElementById("modal").style.display = "block";
+}
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+</script>
+
+</body>
+</html>

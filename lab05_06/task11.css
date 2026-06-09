@@ -1,0 +1,70 @@
+body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background: #f4f4f4;
+    line-height: 1.6;
+}
+
+.header,
+.footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.magazine {
+    width: 90%;
+    margin: 30px auto;
+    display: grid;
+    gap: 20px;
+}
+
+article {
+    background: white;
+    padding: 15px;
+}
+
+article img {
+    width: 100%;
+    height: auto;
+}
+
+/* Desktop Layout */
+@media (min-width: 901px) {
+
+    .magazine {
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-areas:
+            "feature story1 story2"
+            "feature story3 story3";
+    }
+
+    .feature {
+        grid-area: feature;
+    }
+
+    .story:nth-child(2) {
+        grid-area: story1;
+    }
+
+    .story:nth-child(3) {
+        grid-area: story2;
+    }
+
+    .story:nth-child(4) {
+        grid-area: story3;
+    }
+
+    h1 {
+        font-size: 42px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+    h3 {
+        font-size: 22px;
+    }
+}

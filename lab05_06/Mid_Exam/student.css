@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 30px;
+}
+
+/* Table border */
+.border-table {
+    width: 70%;
+    margin: auto;
+    border-collapse: collapse;
+    border: 3px solid black;   /* Outer border */
+}
+
+/* Cell borders */
+.border-table th,
+.border-table td {
+    border: 1px solid black;   /* Inner lines */
+    padding: 10px;
+    text-align: center;
+}
+
+/* Header style */
+.border-table th {
+    background-color: #ddd;
+}

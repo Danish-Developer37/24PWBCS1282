@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task 6 – Form Styling (Registration)</title>
+
+  <!-- (Optional) Project styles if you want to keep global look -->
+  <!-- <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/typography.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/effects.css"> -->
+
+  <style>
+    /* =============== Minimal Base / Theme =============== */
+    :root{
+      --bg: #0f1220;
+      --panel: #171a2b;
+      --panel-2: #20243a;
+      --text: #e6e8f2;
+      --muted: #9aa3b2;
+      --primary: #6aa2ff;
+      --primary-600: #3c7cff;
+      --success: #22c55e;
+      --success-700: #16a34a;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --radius: 12px;
+      --ring: 3px;
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height:1.6;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 10% -10%, #243158 0%, #14182a 60%, #0c0f1e 100%), var(--bg);
+    }
+    .container{ width:min(100% - 2rem, 980px); margin-inline:auto; padding-block:2rem; }
+    .card{
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: 0 16px 40px rgba(0,0,0,.25);
+    }
+    h1{ margin:0 0 .25rem; }
+    .lead{ color:var(--muted); margin:0 0 1rem; }
+    a{ color: var(--primary); text-decoration: none; }
+
+    /* =============== Form Layout =============== */
+    .form{
+      display: grid;
+      gap: 1rem;
+    }
+    @media (min-width: 720px){
+      .form__grid{
+        display:grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+    }
+
+    /* =============== Field Base Styles =============== */
+    .field{ display: grid; gap: .4rem; }
+    .label{ font-weight: 600; }
+    .control{
+      position: relative;
+    }
+    .input, .select, .textarea{
+      width: 100%;
+      padding: .7rem .9rem;
+      color: var(--text);
+      background: #14182a;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 10px;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease, transform .05s ease;
+    }
+    .textarea{ min-height: 120px; resize: vertical; }
+
+    /* Placeholders */
+    .input::placeholder, .textarea::placeholder{ color: #96a0b1; opacity: .85; }
+
+    /* Focus states */
+    .input:focus, .select:focus, .textarea:focus{
+      border-color: rgba(106,162,255,.65);
+      box-shadow: 0 0 0 var(--ring) rgba(106,162,255,.35);
+    }
+
+    /* =============== Dropdown (select) styling =============== */
+    .select{
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      padding-right: 2.5rem; /* space for arrow */
+      background-image:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0)),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="%23e6e8f2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+      background-repeat: no-repeat, no-repeat;
+      background-position: 0 0, right .55rem center;
+      background-size: auto 100%, 1.2rem;
+    }
+
+    /* =============== Button Styles =============== */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:.4rem;
+      padding: .7rem 1rem;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background: var(--primary);
+      color: #0c0f1e;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .05s ease, filter .2s ease, box-shadow .2s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .btn:hover{ filter: brightness(1.08); }
+    .btn:active{ transform: translateY(1px); }
+    .btn:focus-visible{ outline: none; box-shadow: 0 0 0 var(--ring) rgba(106,162,255,.45); }
+    .btn.secondary{
+      background: transparent;
+      color: var(--text);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    /* =============== Error & Success States =============== */
+    .help{ font-size: .9rem; color: var(--muted); }
+    .error-text{ color: #ffd1d1; display: none; }
+    .success-text{ color: #bff3cc; display: none; }
+
+    /* Per-field error/success styling */
+    .field--error .input, .field--error .select, .field--error .textarea{
+      border-color: rgba(239,68,68,.85);
+      box-shadow: 0 0 0 var(--ring) rgba(239,68,68,.28);
+    }
+    .field--error .error-text{ display: block; }
+
+    .field--success .input, .field--success .select, .field--success .textarea{
+      border-color: rgba(34,197,94,.85);
+      box-shadow: 0 0 0 var(--ring) rgba(34,197,94,.25);
+    }
+    .field--success .success-text{ display: block; }
+
+    /* Icons on success/error (right side) */
+    .field--success .control::after,
+    .field--error .control::after{
+      content:"";
+      position:absolute; right:.55rem; top:50%; translate: 0 -50%;
+      width: 1.1rem; height: 1.1rem;
+      pointer-events:none;
+      opacity: .95;
+    }
+    .field--success .control::after{
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="%2322c55e" viewBox="0 0 24 24"><path d="M20.285 2.859l1.414 1.414L9 17.972 2.301 11.273l1.414-1.414L9 15.144z"/></svg>') center/contain no-repeat;
+    }
+    .field--error .control::after{
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="%23ef4444" viewBox="0 0 24 24"><path d="M11 7h2v6h-2zm0 8h2v2h-2z"/><path d="M1 21h22L12 2 1 21z"/></svg>') center/contain no-repeat;
+    }
+
+    /* Banner messages */
+    .banner{
+      padding: .8rem 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.14);
+      margin-bottom: .75rem;
+    }
+    .banner--error{ background: rgba(239,68,68,.15); border-color: rgba(239,68,68,.35); color: #ffd1d1; display:none; }
+    .banner--success{ background: rgba(34,197,94,.15); border-color: rgba(34,197,94,.35); color: #bff3cc; display:none; }
+
+    /* Checkbox / terms */
+    .checkbox{
+      display: flex; align-items: center; gap: .6rem;
+      background: #14182a;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px; padding: .7rem .9rem;
+    }
+    .checkbox input{ width: 18px; height: 18px; accent-color: var(--primary-600); }
+
+    /* Small note */
+    .note{ color: var(--muted); font-size: .92rem; }
+
+    /* Success screen */
+    .form--success .form__body{ display:none; }
+    .form--success .banner--success{ display:block; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="card">
+      <h1>Registration Form (Styled)</h1>
+      <p class="lead">Custom inputs, focus states, styled button & dropdown, error states, and a success confirmation—all in one demo.</p>
+      <p class="lead"><a href="../index.html">← Back to Home</a></p>
+    </header>
+
+    <section class="card" style="margin-top:1rem;">
+      <!-- Global banners (aria-live for announcements) -->
+      <div id="formBannerError" class="banner banner--error" aria-live="polite"></div>
+      <div id="formBannerSuccess" class="banner banner--success" aria-live="polite">🎉 Registration successful! Welcome aboard.</div>
+
+      <form id="regForm" class="form" novalidate>
+        <div class="form__body">
+          <div class="form__grid">
+            <!-- First Name -->
+            <div class="field" id="field-first">
+              <label class="label" for="firstName">First name</label>
+              <div class="control">
+                <input class="input" id="firstName" name="firstName" type="text" placeholder="Ayesha" autocomplete="given-name" required />
+              </div>
+              <p class="help error-text">Please enter your first name.</p>
+              <p class="help success-text">Looks good.</p>
+            </div>
+
+            <!-- Last Name -->
+            <div class="field" id="field-last">
+              <label class="label" for="lastName">Last name</label>
+              <div class="control">
+                <input class="input" id="lastName" name="lastName" type="text" placeholder="Khan" autocomplete="family-name" required />
+              </div>
+              <p class="help error-text">Please enter your last name.</p>
+              <p class="help success-text">Nice.</p>
+            </div>
+
+            <!-- Email -->
+            <div class="field" id="field-email">
+              <label class="label" for="email">Email</label>
+              <div class="control">
+                <input class="input" id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+              </div>
+              <p class="help error-text">Enter a valid email (e.g., name@domain.com).</p>
+              <p class="help success-text">Email looks valid.</p>
+            </div>
+
+            <!-- Country (Styled Select) -->
+            <div class="field" id="field-country">
+              <label class="label" for="country">Country</label>
+              <div class="control">
+                <select class="select" id="country" name="country" required>
+                  <option value="">Select country…</option>
+                  <option value="PK">Pakistan</option>
+                  <option value="IN">India</option>
+                  <option value="BD">Bangladesh</option>
+                  <option value="US">United States</option>
+                  <option value="GB">United Kingdom</option>
+                </select>
+              </div>
+              <p class="help error-text">Please choose your country.</p>
+              <p class="help success-text">Selected.</p>
+            </div>
+
+            <!-- Password -->
+            <div class="field" id="field-pass">
+              <label class="label" for="password">Password</label>
+              <div class="control">
+                <input class="input" id="password" name="password" type="password" placeholder="Min 8 chars" autocomplete="new-password" required minlength="8" />
+              </div>
+              <p class="help error-text">Password must be at least 8 characters.</p>
+              <p class="help success-text">Strong enough.</p>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="field" id="field-confirm">
+              <label class="label" for="confirm">Confirm password</label>
+              <div class="control">
+                <input class="input" id="confirm" name="confirm" type="password" placeholder="Re-type password" autocomplete="new-password" required />
+              </div>
+              <p class="help error-text">Passwords do not match.</p>
+              <p class="help success-text">Matched.</p>
+            </div>
+          </div>
+
+          <!-- Bio -->
+          <div class="field" id="field-bio">
+            <label class="label" for="bio">Short bio (optional)</label>
+            <div class="control">
+              <textarea class="textarea" id="bio" name="bio" placeholder="Tell us a little about yourself…"></textarea>
+            </div>
+            <p class="help">Tip: You can leave this blank.</p>
+          </div>
+
+          <!-- Terms -->
+          <label class="checkbox" id="field-terms">
+            <input type="checkbox" id="terms" name="terms" required />
+            <span>I agree to the <a href="#" aria-label="terms and conditions">Terms & Conditions</a>.</span>
+          </label>
+          <p class="help error-text" style="margin-top:-.4rem;">You must accept the terms to continue.</p>
+
+          <!-- Actions -->
+          <div style="display:flex; gap:.6rem; flex-wrap: wrap;">
+            <button type="submit" class="btn">Create account</button>
+            <button type="reset" class="btn secondary">Reset</button>
+          </div>
+
+          <p class="note">This page demonstrates: custom field styling, focus rings, styled button & dropdown, error states, and success confirmation UI.</p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Tiny client-side validation to showcase styles
+    (function(){
+      const form = document.getElementById('regForm');
+      const bannerError = document.getElementById('formBannerError');
+      const bannerSuccess = document.getElementById('formBannerSuccess');
+
+      const get = id => document.getElementById(id);
+      const fields = {
+        first:   { wrap: get('field-first'),   el: get('firstName'),  test: v => v.trim().length > 0, msg: 'Please enter your first name.' },
+        last:    { wrap: get('field-last'),    el: get('lastName'),   test: v => v.trim().length > 0, msg: 'Please enter your last name.' },
+        email:   { wrap: get('field-email'),   el: get('email'),      test: v => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v), msg: 'Enter a valid email.' },
+        country: { wrap: get('field-country'), el: get('country'),    test: v => v.trim() !== '', msg: 'Please choose your country.' },
+        pass:    { wrap: get('field-pass'),    el: get('password'),   test: v => v.length >= 8, msg: 'Password must be at least 8 characters.' },
+        confirm: { wrap: get('field-confirm'), el: get('confirm'),    test: v => v === get('password').value && v.length >= 8, msg: 'Passwords do not match.' },
+        terms:   { wrap: get('field-terms'),   el: get('terms'),      test: v => v === true, msg: 'You must accept the terms.' }
+      };
+
+      function setState(field, ok){
+        field.wrap.classList.remove('field--error', 'field--success');
+        if(ok){
+          field.wrap.classList.add('field--success');
+          field.el.setAttribute('aria-invalid', 'false');
+        }else{
+          field.wrap.classList.add('field--error');
+          field.el.setAttribute('aria-invalid', 'true');
+        }
+      }
+
+      // Validate on input/change
+      Object.values(fields).forEach(f=>{
+        const evt = (f.el.type === 'checkbox' || f.el.tagName === 'SELECT') ? 'change' : 'input';
+        f.el.addEventListener(evt, ()=>{
+          const val = (f.el.type === 'checkbox') ? f.el.checked : f.el.value;
+          setState(f, f.test(val));
+          bannerError.style.display = 'none';
+        });
+      });
+
+      // Submit handler
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        bannerError.style.display = 'none';
+
+        let errors = [];
+        for(const key in fields){
+          const f = fields[key];
+          const val = (f.el.type === 'checkbox') ? f.el.checked : f.el.value;
+          const ok = f.test(val);
+          setState(f, ok);
+          if(!ok) errors.push(f.msg);
+        }
+
+        if(errors.length){
+          // Show error banner with first error (keep it simple)
+          bannerError.textContent = 'Please fix the highlighted fields. ' + errors[0];
+          bannerError.style.display = 'block';
+          return;
+        }
+
+        // Success
+        form.classList.add('form--success');
+        bannerSuccess.style.display = 'block';
+        bannerError.style.display = 'none';
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      // Reset handler
+      form.addEventListener('reset', ()=>{
+        bannerError.style.display = 'none';
+        bannerSuccess.style.display = 'none';
+        form.classList.remove('form--success');
+        Object.values(fields).forEach(f=>{
+          f.wrap.classList.remove('field--error','field--success');
+          f.el.removeAttribute('aria-invalid');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

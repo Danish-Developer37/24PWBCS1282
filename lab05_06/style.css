@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+/* Block vs Inline vs Inline-Block */
+
+.block {
+    display: block;
+    background: lightblue;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.inline {
+    display: inline;
+    background: lightcoral;
+    padding: 5px;
+}
+
+.inline-block {
+    display: inline-block;
+    background: lightgreen;
+    padding: 10px;
+    margin: 5px;
+    width: 150px;
+}
+
+/* Table Display Without Table */
+
+.table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: center;
+}
+/* Mobile View */
+@media (max-width: 600px) {
+
+    .inline-block {
+        display: block;
+        width: 100%;
+    }
+
+    .table {
+        display: block;
+    }
+
+    .row {
+        display: block;
+    }
+
+    .cell {
+        display: block;
+        border-bottom: 1px solid #999;
+    }
+
+    .hide-mobile {
+        display: none;
+    }
+}
+
+/* Desktop View */
+@media (min-width: 601px) {
+
+    .hide-desktop {
+        display: none;
+    }
+}
+
+/* Hidden elements styling */
+.hide-mobile,
+.hide-desktop {
+    background: orange;
+    padding: 10px;
+    margin-top: 10px;
+}

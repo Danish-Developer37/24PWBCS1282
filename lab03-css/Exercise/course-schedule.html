@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task 12 – Course Schedule</title>
+
+  ../styles/main.css
+  ../styles/typography.css
+  ../styles/components.css
+  ../styles/effects.css
+
+  <style>
+    /* ===== Base Page Styling ===== */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: #e6e8f2;
+      background: radial-gradient(1200px 600px at 10% -10%, #243158, #0c0f1e);
+      line-height: 1.6;
+    }
+    .container {
+      width: min(100% - 2rem, 1100px);
+      margin-inline: auto;
+      padding-block: 2rem;
+    }
+    h1 { margin-bottom: 1rem; }
+
+    /* ===== Table Wrapper (for responsiveness) ===== */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(23,26,43,0.5);
+      backdrop-filter: blur(6px) saturate(150%);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ===== Main Table Styling ===== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+    thead th {
+      background: rgba(255,255,255,0.08);
+      color: #9aa3b2;
+      padding: 0.9rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 1rem;
+      border-bottom: 2px solid rgba(255,255,255,0.12);
+    }
+    tbody td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* ===== Zebra Striping ===== */
+    tbody tr:nth-child(odd) {
+      background: rgba(255,255,255,0.03);
+    }
+    tbody tr:nth-child(even) {
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* ===== Hover Effect on Rows ===== */
+    tbody tr:hover {
+      background: rgba(106,162,255,0.20);
+      transition: background 0.2s ease;
+    }
+
+    /* ===== Color-coded Course Types ===== */
+    .type-lecture {
+      background: rgba(59,130,246,0.25);
+      color: #93c5fd;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+    }
+    .type-lab {
+      background: rgba(16,185,129,0.25);
+      color: #6ee7b7;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+    }
+    .type-tutorial {
+      background: rgba(245,158,11,0.25);
+      color: #fcd34d;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+    }
+
+    /* ===== Responsive Utility Text ===== */
+    .note {
+      color: #9aa3b2;
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Course Schedule</h1>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Type</th>
+            <th>Day</th>
+            <th>Time</th>
+            <th>Instructor</th>
+            <th>Room</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CS101 – Intro to Computing</td>
+            <td><span class="type-lecture">Lecture</span></td>
+            <td>Monday</td>
+            <td>9:00 AM – 10:30 AM</td>
+            <td>Dr. Adams</td>
+            <td>B‑201</td>
+          </tr>
+
+          <tr>
+            <td>CS101 – Lab</td>
+            <td><span class="type-lab">Lab</span></td>
+            <td>Tuesday</td>
+            <td>2:00 PM – 4:00 PM</td>
+            <td>Ms. Khan</td>
+            <td>Lab‑3</td>
+          </tr>
+
+          <tr>
+            <td>CS105 – Programming I</td>
+            <td><span class="type-lecture">Lecture</span></td>
+            <td>Wednesday</td>
+            <td>11:00 AM – 12:30 PM</td>
+            <td>Mr. Lee</td>
+            <td>A‑101</td>
+          </tr>
+
+          <tr>
+            <td>CS105 – Tutorial</td>
+            <td><span class="type-tutorial">Tutorial</span></td>
+            <td>Friday</td>
+            <td>1:00 PM – 2:00 PM</td>
+            <td>Ms. Sara</td>
+            <td>T‑12</td>
+          </tr>
+
+          <tr>
+            <td>MTH110 – Calculus I</td>
+            <td><span class="type-lecture">Lecture</span></td>
+            <td>Thursday</td>
+            <td>10:00 AM – 11:30 AM</td>
+            <td>Dr. Malik</td>
+            <td>C‑305</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note">
+      ✔ Table is responsive — drag screen narrow to see scroll.<br>
+      ✔ Color-coded types: Lecture / Lab / Tutorial.<br>
+      ✔ Zebra rows + hover highlight + custom spacing.
+    </p>
+  </main>
+</body>
+</html>

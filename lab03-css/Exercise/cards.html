@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task 7 – Card Component Design</title>
+
+  <!-- ✅ Correct stylesheet links from /exercises -->
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/typography.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/effects.css">
+
+  <style>
+    /* ===== Minimal base so this page looks good standalone ===== */
+    * { box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height:1.6; color:#e6e8f2;
+      background: radial-gradient(1200px 600px at 10% -10%, #243158 0%, #14182a 60%, #0c0f1e 100%);
+    }
+    .container{ width:min(100% - 2rem, 1100px); margin-inline:auto; padding-block:2rem; }
+
+    /* ===== Grid layout ===== */
+    .cards-grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.1rem;
+    }
+
+    /* ===== Card component =====
+       Covers: spacing consistency, borders, shadows, hover transforms,
+       image + text content, and CTA buttons.
+    */
+    .card{
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #171a2b, #20243a);
+      border: 1px solid rgba(255,255,255,.12); /* consistent border */
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0,0,0,.35); /* depth */
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      min-height: 100%;
+    }
+    .card:hover{
+      transform: translateY(-4px); /* hover transformation */
+      box-shadow: 0 18px 50px rgba(0,0,0,.5);
+      border-color: rgba(255,255,255,.2);
+    }
+
+    /* Image area */
+    .card-media{
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #0b1222;
+    }
+    .card-media img{
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .35s ease, filter .35s ease;
+    }
+    .card:hover .card-media img{ transform: scale(1.05); } /* subtle zoom on hover */
+
+    /* Optional label in top-left */
+    .card-badge{
+      position: absolute; top: 10px; left: 10px;
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.18);
+      color: #fff; padding: .25rem .5rem; font-size: .85rem; border-radius: 6px;
+    }
+
+    /* Overlay gradient for text legibility on images (if needed) */
+    .card-media::after{
+      content:"";
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,.35) 100%);
+      opacity: .7; pointer-events: none;
+    }
+
+    /* Body content */
+    .card-body{
+      display: grid;
+      gap: .5rem;
+      padding: 1rem;                       /* consistent spacing */
+    }
+    .card-title{
+      margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: .2px;
+    }
+    .card-meta{
+      margin: 0; color: #9aa3b2; font-size: .95rem;
+    }
+    .card-desc{
+      margin: .25rem 0 0; color: #cbd3e1;
+      font-size: .975rem;
+    }
+
+    /* Price row / action row */
+    .card-row{
+      display: flex; align-items: center; justify-content: space-between;
+      gap: .75rem;
+      padding: 0 1rem 1rem 1rem;           /* consistent spacing bottom */
+      margin-top: auto;                    /* push actions to card bottom */
+    }
+
+    /* Buttons (CTA) */
+    .btn{
+      display: inline-block;
+      padding: .6rem .95rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.16);
+      text-decoration: none;
+      font-weight: 700;
+      transition: background .18s ease, color .18s ease, border-color .18s ease, transform .06s ease;
+      will-change: transform;
+    }
+    .btn-primary{
+      background: #6aa2ff; color: #0c0f1e; border-color: transparent;
+    }
+    .btn-primary:hover{ filter: brightness(1.08); transform: translateY(-1px); }
+    .btn-ghost{
+      background: transparent; color: #e6e8f2;
+    }
+    .btn-ghost:hover{
+      background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.25);
+      transform: translateY(-1px);
+    }
+
+    /* Small helpers */
+    .price{ font-weight: 800; color: #ffcc66; letter-spacing: .2px; }
+    .rating{ color: #ffd166; font-size: .95rem; }
+    .tag{
+      display:inline-block; font-size:.8rem; padding:.2rem .5rem; border-radius:999px;
+      background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); margin-right:.35rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="panel" style="margin-bottom:1rem;">
+      <h1 style="margin:0 0 .25rem;">Card Component Design</h1>
+      <p class="lead">Consistent spacing & borders, shadow depth, hover transforms, image + text, and clear CTAs.</p>
+      <p style="margin:.4rem 0 0;"><a href="../index.html" class="btn btn-ghost">← Back to Home</a></p>
+    </header>
+
+    <section class="cards-grid">
+      <!-- Card 1: Product -->
+      <article class="card">
+        <div class="card-media">
+          <span class="card-badge">New</span>
+          <img src="C:\Users\ok\Desktop\images.jpg" alt="Wireless Headphones product photo">
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">Wireless Headphones</h2>
+          <p class="card-meta">Bluetooth 5.3 • 32h battery</p>
+          <p class="card-desc">Comfortable over‑ear design with active noise reduction and low‑latency mode for gaming.</p>
+          <div>
+            <span class="tag">Noise‑Cancel</span>
+            <span class="tag">Bluetooth</span>
+            <span class="tag">Fast‑Charge</span>
+          </div>
+        </div>
+        <div class="card-row">
+          <span class="price">$129</span>
+          <div>
+            <a href="#" class="btn btn-ghost" aria-label="View details for Wireless Headphones">Details</a>
+            <a href="#" class="btn btn-primary" aria-label="Add Wireless Headphones to cart">Add to Cart</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: Service -->
+      <article class="card">
+        <div class="card-media">
+          <span class="card-badge">Popular</span>
+          <img src="C:\Users\ok\Desktop\download.jpg" alt="Cloud backup service illustration">
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">Cloud Backup</h2>
+          <p class="card-meta">Service • Unlimited devices</p>
+          <p class="card-desc">Automatic encrypted backups with 30‑day version history and instant restore across devices.</p>
+          <div class="rating">★★★★★</div>
+        </div>
+        <div class="card-row">
+          <span class="price">$9/mo</span>
+          <div>
+            <a href="#" class="btn btn-ghost">Learn More</a>
+            <a href="#" class="btn btn-primary">Start Trial</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Product with stronger image -->
+      <article class="card">
+        <div class="card-media">
+          <img src="C:\Users\ok\Desktop\download (1).jpg" alt="Smartwatch close-up">
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">Smartwatch S Pro</h2>
+          <p class="card-meta">AMOLED • GPS • Waterproof</p>
+          <p class="card-desc">Track fitness, sleep, and heart rate with 10‑day battery life and fast magnetic charging.</p>
+        </div>
+               <div class="card-row">
+          <span class="price">$199</span>
+          <div>
+            <a href="#" class="btn btn-ghost">Compare</a>
+            <a href="#" class="btn btn-primary">Buy Now</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4: Service w/ different image style -->
+      <article class="card">
+        <div class="card-media">
+          <span class="card-badge">-30%</span>
+          <img src="C:\Users\ok\Desktop\download (2).jpg" alt="UI/UX design service board with sketches">
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">UI/UX Design Sprint</h2>
+          <p class="card-meta">Service • 5 days</p>
+          <p class="card-desc">Rapid discovery, wireframes, and interactive prototype with stakeholder testing.</p>
+        </div>
+        <div class="card-row">
+          <span class="price">$899</span>
+          <div>
+            <a href="#" class="btn btn-ghost">Outline</a>
+            <a href="#" class="btn btn-primary">Book Now</a>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

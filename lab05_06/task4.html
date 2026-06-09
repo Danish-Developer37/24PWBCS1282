@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flexbox Navigation</title>
+    <link rel="stylesheet" href="task4.css">
+</head>
+<body>
+
+<!-- Header Navigation -->
+<header class="navbar">
+    <div class="logo">MySite</div>
+
+    <nav class     #Home</a>
+
+        <div class="dropdown">
+            #Services</a>
+            <div class="dropdown-menu">
+                <a href="#">Web</a>
+                <a href="#">Mobile</a>
+                <a href="#">Design</a>
+            </div>
+        </div>
+
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+</header>
+
+<!-- Layout -->
+<div class="layout">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <a href="#">Dashboard</a>
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+    </aside>
+
+    <!-- Content -->
+    <main class="content">
+        <h1>Flexbox Navigation System</h1>
+        <p>This page demonstrates responsive navigation using Flexbox.</p>
+    </main>
+
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>
